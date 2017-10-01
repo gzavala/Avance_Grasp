@@ -41,9 +41,31 @@ public class tools {
          return obj_coordenadas;
     }
 
-    public tools() {
+    public static int[][] carga_maps(String arch_mapa, int nfil, int ncol) {
+     int[][]obj_matriz=new int[nfil][ncol];   
+                try{
+    		    int fil=0;
+                    String cadleida=null; 
+		    FileReader finput = new FileReader(arch_mapa);
+		    BufferedReader vread = new BufferedReader(finput);
+		    while((cadleida = vread.readLine())!=null) 
+                    { for(int j=0;j<ncol;j++ )
+                      { obj_matriz[fil][j]=Integer.parseInt(cadleida.charAt(j)+"" );   
+                      }   
+                     fil++;  
+                    }
+                    vread.close();
+                    System.out.println("Lectura de archivo Mapa..OK..");       
+                   }
+                catch(Exception e)
+                {   System.out.println("Error leyendo archivo de Mapa ");
+                    System.out.println(""+e.getMessage());
+                 }    
+     return obj_matriz; 
     }
 
+    public tools() {
+    }
         public static ArrayList<coordenadas> carga_coordenadas(String archinput  )  
 	  { 
               ArrayList<coordenadas> collect_coordenadas = new ArrayList<coordenadas>(); 
@@ -54,7 +76,6 @@ public class tools {
 		    BufferedReader vread = new BufferedReader(finput);
 		    while((cadleida = vread.readLine())!=null) 
                     {  
-                        //cadleida=cadleida.replace('|', ' ');
                         obj_coord= extrae_coordenadas(cadleida);
                         collect_coordenadas.add(obj_coord);
 		    }
@@ -67,8 +88,5 @@ public class tools {
                  }    
                return collect_coordenadas;  
 	  }
-               
-
-    
-    
+ 
 }
