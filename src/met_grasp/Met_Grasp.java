@@ -7,6 +7,7 @@ package met_grasp;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Set;
 import tools.tools;
 import model.coordenadas;
 
@@ -36,7 +37,34 @@ public class Met_Grasp {
        int ncol=60;
        int[][] mapa= new int[nfil][ncol];
        mapa= tools.carga_maps(arch_mapa,nfil,ncol); 
-/*       
+    
+     /*  
+       System.out.println("");
+       for(int i=0; i<collect_coordenadas.size();i++)
+        { System.out.println("Coordenada "+ (i+1)+" con valor : "+ mapa[collect_coordenadas.get(i).getX()][collect_coordenadas.get(i).getY()]);
+        }  
+     */ 
+       int x1=5;
+       int y1=5;
+       int x2=3; 
+       int y2=5; 
+       int min_dist=0; 
+       
+       ArrayList<coordenadas> recorrido=new ArrayList<coordenadas>(); 
+       coordenadas obj_coor= new coordenadas();
+       obj_coor.setX(x1);
+       obj_coor.setY(y1);
+       recorrido.add(obj_coor);
+       min_dist=tools.distanciaminima(x1, y1, x2, y2, mapa,nfil,ncol, recorrido);
+       System.out.println("Minima distancia: "+ min_dist);
+       
+       for (int i=0; i<recorrido.size();i++)
+       { System.out.println("Coordenadas: "+ recorrido.get(i).getX() + " , " + recorrido.get(i).getY()  );
+        }   
+      
+       
+       
+    /*  
      for (int i=0; i<nfil; i++)
      {
       for(int j=0; j<ncol;j++)
@@ -44,7 +72,7 @@ public class Met_Grasp {
         }  
        System.out.println("");
       }  
-  */     
+    */   
     /* motodo para identificar el directorio actual   
      File miDir = new File (".");
      try {

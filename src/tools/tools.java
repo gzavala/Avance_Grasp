@@ -15,7 +15,8 @@ import model.coordenadas;
  *
  * @author GZAVALA
  */
-public class tools {
+public class tools 
+{
 
     public static coordenadas extrae_coordenadas(String cadleida) {
         coordenadas obj_coordenadas=new coordenadas();
@@ -64,9 +65,34 @@ public class tools {
      return obj_matriz; 
     }
 
+    private static boolean estacontenido(int x, int y, ArrayList<coordenadas> desplazamiento) 
+    {  int tam=0; 
+       tam=desplazamiento.size();
+       boolean esta=false; 
+       for(int i=0; i<tam; i++)
+       {  if ( (desplazamiento.get(i).getX()==x)&& (desplazamiento.get(i).getY()==y) )
+          { esta=true;  
+           }
+        } 
+      return esta; 
+    }
+
+    private static void copia(ArrayList<coordenadas> desplazamiento, ArrayList<coordenadas> auxiliar) {
+       coordenadas obj= new coordenadas(); 
+       int n=0; 
+       for(int i=0; i<desplazamiento.size();i++)
+        { obj.setX( desplazamiento.get(i).getX());
+          obj.setY( desplazamiento.get(i).getY());
+          auxiliar.add(obj);
+        }  
+       
+    }
+
     public tools() {
     }
-        public static ArrayList<coordenadas> carga_coordenadas(String archinput  )  
+    
+    
+    public static ArrayList<coordenadas> carga_coordenadas(String archinput  )  
 	  { 
               ArrayList<coordenadas> collect_coordenadas = new ArrayList<coordenadas>(); 
               coordenadas obj_coord=new coordenadas() ;  
@@ -88,5 +114,67 @@ public class tools {
                  }    
                return collect_coordenadas;  
 	  }
- 
+  //el carrito debe partir de una posicion con valor 1
+   public static int distanciaminima(int x1,int y1, int x2, int y2,int[][] mapa, int nfil,int ncol, ArrayList<coordenadas> desplazamiento  )
+   {  coordenadas obj_coor= new coordenadas();
+      ArrayList<coordenadas> auxiliar= new ArrayList<coordenadas>();     
+      int v_distancia=0;
+      int ocurr=0; 
+      int distmin=0; 
+      int a=0;
+      int b=0; 
+      int val_dis=0;
+      if (  ( (x1==x2) && (Math.abs(y1-y2)==1) ) ||  ( (y1==y2) && (Math.abs(x1-x2)==1) )  )
+       {   
+           if (!estacontenido(x1,y1,desplazamiento))
+            { obj_coor.setX(x1);
+              obj_coor.setY(y1);
+              desplazamiento.add(obj_coor);                 
+            }
+           v_distancia= 1;  
+       }   
+       else
+       {//recorre todas las direcciones posibles al eje x y al eje y
+        for (int i=-1; i<2;i++) // i:desplamiento en el eje x
+        {
+         for (int j=-1;j<2;j++) //j: desplazamiento en el eje y
+          {//solo desplazamientos válidos
+            if ( ((i==-1)&&(j==0)) ||  ((i==0)&&(j==-1)) || ((i==0)&&(j==1)) || ((i==1)&&(j==0))  ) 
+            { //Si la nueva posición está dentro del mapa
+               if ( ( x1+i>=0) && (x1+i<=nfil-1) &&(y1+j>=0) && (y1+j<=ncol-1 )    )
+              { //la siguiente posicion tiene que ser distinta de rack
+                if( (mapa[x1+i][y1+j]!=1 ) && (!estacontenido(x1+i,y1+j,desplazamiento) )  )
+                { //agregas el primer elemento que vendría a ser el minimo
+                    copia(desplazamiento,auxiliar);
+                    obj_coor.setX(x1+i);
+                    obj_coor.setY(y1+j);
+                    auxiliar.add(obj_coor);
+                    val_dis=distanciaminima(x1+i,y1+j,x2,y2,mapa,nfil,ncol,auxiliar);
+                  if (ocurr==0) 
+                  {  distmin= val_dis;   
+                     a=x1+i;
+                     b=y1+j;
+                  }
+                  else
+                  { if (val_dis<  distmin)
+                    {  distmin= val_dis; 
+                       a=x1+i;
+                       b=y1+j;
+                     }   
+                  }
+                 ocurr++; 
+                } 
+              }   
+            } 
+          }    
+        }   
+        obj_coor.setX(a);
+        obj_coor.setY(b);
+        desplazamiento.add(obj_coor);
+        v_distancia=distmin+1;
+       }
+
+       return v_distancia;
+   } 
+     
 }
