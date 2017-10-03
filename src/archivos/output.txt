@@ -1,2 +1,0 @@
-id_archivo | Distancia Minima
-0 | 55.443775

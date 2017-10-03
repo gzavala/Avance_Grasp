@@ -81,7 +81,7 @@ public class Met_Grasp {
      for(int cont=0; cont<num_repeticiones; cont++)
        {
        //copia de las coordenadas cargadas 
-         copia_coordenadas=tools.copia_coordenadas_leidas(collect_coordenadas); 
+         //copia_coordenadas=tools.copia_coordenadas_leidas(collect_coordenadas); 
          copia_coord_posicion=tools.copia_coord_posicion(collect_coordenadas);
          tam_arreglo=copia_coord_posicion.size();
         //*0 Para éste caso el índice de sensibilidad viene dado por la distancia euclidieana entre  2 puntos
@@ -93,8 +93,8 @@ public class Met_Grasp {
          int[]arr_ocurrencias= new int[tam_arreglo];   
          v_distancias=tools.arreglo_distancias(x0, y0, copia_coord_posicion);
          v_posinicial=tools.posicion_minimo_elemento(v_distancias, tam_arreglo);
-         x_prepop=copia_coordenadas.get(v_posinicial).getX();
-         y_prepop=copia_coordenadas.get(v_posinicial).getY();
+         x_prepop=copia_coord_posicion.get(v_posinicial).getX();
+         y_prepop=copia_coord_posicion.get(v_posinicial).getY();
          //vector inicial de ocurrencias se inicializar en Ceros "0" 
          for (int w=0; w<tam_arreglo;w++)
           { arr_ocurrencias[w]=0; }  
@@ -160,7 +160,6 @@ public class Met_Grasp {
          v_dist=tools.distanciaelite(xinicial,yinicial,solucion_elite);
           
         //*3 Fase de Búsqueda ó  Mejora Grasp-- > a elegir 2opt con best improvement ó first improment
-        
         
         
          if (cont==0)
