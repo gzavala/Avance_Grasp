@@ -47,7 +47,7 @@ public class Met_Grasp {
        ArrayList<coord_grasp>copia_coord_posicion=new ArrayList<coord_grasp>();
        ArrayList<coord_grasp>solucion_elite=new ArrayList<coord_grasp>();
        
-       float alpha=(float)0.7; //consideraremos esta variable de relajacion 
+       float alpha=(float)0.6; //consideraremos esta variable de relajacion 
        
        vwrite.write("id_archivo | Distancia Minima");
        vwrite.newLine();
@@ -63,7 +63,7 @@ public class Met_Grasp {
        int x_prepop=0; 
        int y_prepop=0;
        //variable para le número de repeticiones del algoritmo grasp
-       long num_repeticiones=100000; //100000 
+       long num_repeticiones=200; //5000 
        int tam_arreglo=0; 
        int v_buscpos=0; 
     for (int numfile=0;numfile<numarch_coord; numfile++)
@@ -78,7 +78,7 @@ public class Met_Grasp {
   //-------------*****FASES DEL ALGORITMO GRASP*****------------------------------------------  
      //bucle para el total de repeticiones del algoritmo grasp, por cada repetición se obtiene una distancia mínima, 
      //luego se compara y se obtiene la distancia mínima por archivo leido
-     for(int cont=0; cont<num_repeticiones; cont++)
+     for(long contrep=0; contrep<num_repeticiones; contrep++)
        {
        //copia de las coordenadas cargadas 
          //copia_coordenadas=tools.copia_coordenadas_leidas(collect_coordenadas); 
@@ -159,10 +159,14 @@ public class Met_Grasp {
            }  
          v_dist=tools.distanciaelite(xinicial,yinicial,solucion_elite);
           
-        //*3 Fase de Búsqueda ó  Mejora Grasp-- > a elegir 2opt con best improvement ó first improment
+        //*3 Fase de Búsqueda ó  Mejora Grasp-- > a elegir 2opt con best improvement ó first improment (primera mejora)
+        // reafina la solución elite para esta repeticion 
+        
+         solucion_elite= tools.dos_opt_primera_mejora(xinicial, yinicial, solucion_elite,v_dist);
+         v_dist=tools.distanciaelite(xinicial,yinicial,solucion_elite);
         
         
-         if (cont==0)
+         if (contrep==0)
          {  v_distancia_minima= v_dist;
          }
          else
@@ -170,7 +174,11 @@ public class Met_Grasp {
             { v_distancia_minima=v_dist; 
              } 
          }
-        
+         
+       if (contrep%100==0)
+       { System.out.println("Iteracion numero "+ contrep);
+        }   
+         
        } 
 
        //Se escribe la distancia mínima obtenida para el archivo de carga ".\\src\\archivos\\coordinates"+numfile+".txt"
@@ -185,5 +193,6 @@ public class Met_Grasp {
 
     
     }
+
     
 }

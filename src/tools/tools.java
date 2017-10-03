@@ -55,6 +55,89 @@ public class tools
     
     }
 
+    public static ArrayList<coord_grasp> dos_opt_primera_mejora(int xinicial, int yinicial, ArrayList<coord_grasp> solucion_elite, float v_dist) {
+      int tam=solucion_elite.size();
+      
+      //variables creadas para almacenar los objetos que se intercambiaran 
+      coord_grasp obj_elite_i= new coord_grasp();
+      coord_grasp obj_elite_j= new coord_grasp();
+      
+      boolean mejora_opt=false; 
+      float v_dist_mejorada=(float)0.0;
+      
+      // realiza una copia de la solución Elite que entro como parametro para trabajar sobre éste
+      ArrayList<coord_grasp> copy_solucion_elite= new ArrayList<coord_grasp>();
+      for (int i=0; i<tam;i++)
+      { copy_solucion_elite.add(solucion_elite.get(i));
+      }
+      
+      // se obtendrá un lazo de tamaño dos, intercambiando sus elementos para ver si así la distancia se 
+      // optimiza teniendo menor valor
+      for (int i=0; i<tam-1; i++)
+      {
+        for (int j=i+1;j<tam ;j++)
+       {  
+          obj_elite_i.setX(copy_solucion_elite.get(i).getX() );
+          obj_elite_i.setY(copy_solucion_elite.get(i).getY());
+          obj_elite_i.setPos(copy_solucion_elite.get(i).getPos());
+          obj_elite_i.setInd_lrc(copy_solucion_elite.get(i).getInd_lrc());
+
+          obj_elite_j.setX(copy_solucion_elite.get(j).getX() );
+          obj_elite_j.setY(copy_solucion_elite.get(j).getY());
+          obj_elite_j.setPos(copy_solucion_elite.get(j).getPos());
+          obj_elite_j.setInd_lrc(copy_solucion_elite.get(j).getInd_lrc());
+          
+          copy_solucion_elite.get(i).setX( obj_elite_j.getX()) ;
+          copy_solucion_elite.get(i).setY( obj_elite_j.getY());
+          copy_solucion_elite.get(i).setPos(obj_elite_j.getPos());
+          copy_solucion_elite.get(i).setInd_lrc(obj_elite_j.getInd_lrc());
+          
+          copy_solucion_elite.get(j).setX( obj_elite_i.getX()) ;
+          copy_solucion_elite.get(j).setY( obj_elite_i.getY());
+          copy_solucion_elite.get(j).setPos(obj_elite_i.getPos());
+          copy_solucion_elite.get(j).setInd_lrc(obj_elite_i.getInd_lrc());
+
+          v_dist_mejorada=distanciaelite(xinicial,yinicial,copy_solucion_elite);
+          
+          //si se mejora la distancia mínima intercambiando los arcos o nodos, entonces se sale del bucle 
+          if (v_dist_mejorada<v_dist)
+          {  mejora_opt=true; 
+             break; 
+            }
+          else 
+            //sino se tiene solucion mejorada se regresa deja la estructura inicial  
+          {   
+             while (copy_solucion_elite.size()>0)
+             {  copy_solucion_elite.remove(0);
+             }  
+             for (int t=0; t<tam;t++)
+              { copy_solucion_elite.add(solucion_elite.get(t));
+             }              
+
+          }   
+        }   
+       if (mejora_opt==true)
+        { break;  
+         }   
+      }
+      
+      
+      return copy_solucion_elite; 
+    }
+
+    public  static ArrayList<coord_grasp> copia_solucion_elite(ArrayList<coord_grasp> solucion_elite, int tam ) {
+      ArrayList<coord_grasp> arr_sol_elite= new ArrayList<coord_grasp>(tam);
+      coord_grasp obj_sol_elite= new coord_grasp();
+      for(int i=0; i<tam; i++)
+       { 
+         arr_sol_elite.get(i).setX(solucion_elite.get(i).getX());
+         arr_sol_elite.get(i).setY(solucion_elite.get(i).getY());
+         arr_sol_elite.get(i).setPos(solucion_elite.get(i).getPos() );
+         arr_sol_elite.get(i).setInd_lrc(solucion_elite.get(i).getInd_lrc() );
+       }  
+      return arr_sol_elite; 
+    }
+
     public tools() {
     }
     
