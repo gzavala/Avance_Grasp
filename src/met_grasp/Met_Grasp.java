@@ -101,6 +101,15 @@ public class Met_Grasp {
     
     
     
+   
+       
+
+    
+
+    
+    }
+    
+}
     
 /*  //Esta parte del programa para considerada para el refinamiento de las distancias, candidatas  a usar
     //método de Floyd y Warshall
@@ -122,12 +131,4 @@ public class Met_Grasp {
        for (int i=0; i<recorrido.size();i++)
        { System.out.println("Coordenadas: "+ recorrido.get(i).getX() + " , " + recorrido.get(i).getY()  );
         }   
- */     
-       
-
-    
-
-    
-    }
-    
-}
+ */  
