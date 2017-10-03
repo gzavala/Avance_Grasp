@@ -4,8 +4,11 @@
  * and open the template in the editor.
  */
 package met_grasp;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Set;
 import tools.tools;
@@ -25,27 +28,35 @@ public class Met_Grasp {
     //carga del mapa de carga
        String arch_mapa=".\\src\\archivos\\map0.txt" ;
        String arch_salida=".\\src\\archivos\\output.txt";
+       //Abre el archivo de salida 
+       FileWriter foutput= new FileWriter(arch_salida);
+       BufferedWriter vwrite= new BufferedWriter(foutput);
+       PrintWriter pwrite=new PrintWriter(vwrite);
+       
        int nfil=30; 
        int ncol=60;
        int[][] mapa= new int[nfil][ncol];
        mapa= tools.carga_maps(arch_mapa,nfil,ncol); 
 
-    int numarch_coord=7; //corresponde al numero de archivos de entrada a leer 
-    String nombgen_arch="";
-    ArrayList<coordenadas>collect_coordenadas=new ArrayList<coordenadas>(); 
-    ArrayList<coordenadas>copia_coordenadas=new ArrayList<coordenadas>(); 
+       int numarch_coord=7; //corresponde al numero de archivos de entrada a leer 
+       String nombgen_arch="";
+       ArrayList<coordenadas>collect_coordenadas=new ArrayList<coordenadas>(); 
+       ArrayList<coordenadas>copia_coordenadas=new ArrayList<coordenadas>(); 
+       vwrite.write("id_archivo | Distancia Minima");
+       vwrite.newLine();
+       
+       
     
-    
-    //Las coordenadas iniciales desde el cual parte el algoritmo
-    int x0=0; 
-    int y0=0; 
-    int v_posinicial=0;
-    //variables para la etapa de prepocesamiento
-    int x_prepop=0; 
-    int y_prepop=0;
-    //variable para le número de repeticiones del algoritmo grasp
-    long num_repeticiones=100000; 
-    float v_distancia_minima=(float) 0.0; 
+       //Las coordenadas iniciales desde el cual parte el algoritmo
+       int x0=0; 
+       int y0=0; 
+       int v_posinicial=0;
+       //variables para la etapa de prepocesamiento
+       int x_prepop=0; 
+       int y_prepop=0;
+       //variable para le número de repeticiones del algoritmo grasp
+       long num_repeticiones=100000; 
+       float v_distancia_minima=(float) 0.0; 
     
     
     for (int numfile=0;numfile<numarch_coord; numfile++)
@@ -58,13 +69,13 @@ public class Met_Grasp {
      //bucle para el total de repeticiones del algoritmo grasp
      for(int cont=0; cont<num_repeticiones; cont++)
        {
-        //copia de las coordenadas cargadas 
+       //copia de las coordenadas cargadas 
          copia_coordenadas=tools.copia_coordenadas(collect_coordenadas); 
 
          //*0 Para éste caso el índice de sensibilidad viene dado por la distancia euclidieana entre puntos
 
         //*1 Fase de Preprocesamiento 
-        // Consiste en hallar a la primera solucion
+        // Consiste en hallar a la primera solucion (x_prepop,y_prepop)
         // En este caso corresponderá a la coordenada mas próxima del punto inicial dado x0=0; y0=0,
          float[] v_distancias= new float[copia_coordenadas.size()];
          v_distancias=tools.arreglo_distancias(x0, y0, copia_coordenadas);
@@ -79,14 +90,17 @@ public class Met_Grasp {
         //*4 Mejora Grasp-- > 2opt
         
        } 
-       
+
        v_distancia_minima=numfile;
        //Se escribe la distancia mínima obtenida para el archivo de carga ".\\src\\archivos\\coordinates"+numfile+".txt"
        //en el archivo de salida:  arch_salida
-      
+       vwrite.write( numfile+  " | "+ v_distancia_minima);
+       vwrite.newLine();
     
     }
-    
+      pwrite.close();
+      vwrite.close();
+ 
     
     
    
