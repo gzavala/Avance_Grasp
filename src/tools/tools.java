@@ -88,6 +88,18 @@ public class tools
        
     }
 
+    public static ArrayList<coordenadas> copia_coordenadas(ArrayList<coordenadas> collect_coordenadas) {
+      ArrayList<coordenadas> arr_coordenadas= new ArrayList<coordenadas>();
+      int tam=collect_coordenadas.size();
+      coordenadas obj= new coordenadas();
+      for (int i=0; i<tam; i++)
+      {  obj.setX(collect_coordenadas.get(i).getX());
+         obj.setY(collect_coordenadas.get(i).getY());
+         arr_coordenadas.add(obj);
+       }   
+       return arr_coordenadas;  
+    }
+
     public tools() {
     }
     
