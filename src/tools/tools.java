@@ -19,6 +19,32 @@ import model.coordenadas;
 public class tools 
 {
 
+    public static float val_min_vector(float[] v_distancias, int tam_recorrido) {
+      float valor=(float)0.0;
+        valor=v_distancias[0];
+       for(int i=0; i<tam_recorrido;i++)
+       { if (v_distancias[i]<valor)
+         { valor=v_distancias[i]; 
+          } 
+       } 
+       return valor; 
+    }
+
+    public static float val_max_vector(float[] v_distancias, int tam_recorrido) {
+      float valor=(float)0.0;
+        valor=v_distancias[0];
+       for(int i=0; i<tam_recorrido;i++)
+       { if (v_distancias[i]>valor)
+         { valor=v_distancias[i]; 
+          } 
+       } 
+       return valor; 
+    }
+
+    public tools() {
+    }
+    
+    
     public static coordenadas extrae_coordenadas(String cadleida) {
         coordenadas obj_coordenadas=new coordenadas();
         cadleida=cadleida.replace("[","");
@@ -89,26 +115,29 @@ public class tools
        
     }
 
-    public static ArrayList<coordenadas> copia_coordenadas(ArrayList<coordenadas> collect_coordenadas) {
-      ArrayList<coordenadas> arr_coordenadas= new ArrayList<coordenadas>();
+    public static ArrayList<coordenadas> copia_coordenadas_leidas(ArrayList<coordenadas> collect_coordenadas) {
       int tam=collect_coordenadas.size();
-      coordenadas obj= new coordenadas();
+      ArrayList<coordenadas> arr_coordenadas= new ArrayList<coordenadas>(tam);
+      int x;
+      int y; 
       for (int i=0; i<tam; i++)
-      {  obj.setX(collect_coordenadas.get(i).getX());
-         obj.setY(collect_coordenadas.get(i).getY());
+      {  x=collect_coordenadas.get(i).getX();
+         y=collect_coordenadas.get(i).getY();
+         coordenadas obj= new coordenadas(x,y);
          arr_coordenadas.add(obj);
        }   
        return arr_coordenadas;  
     }
 
     public static ArrayList<coord_grasp> copia_coord_posicion(ArrayList<coordenadas> collect_coordenadas) {
-      coord_grasp obj = new coord_grasp();
+      int x; 
+      int y;
       ArrayList<coord_grasp> arrg_coord_grasp= new ArrayList<coord_grasp>();
       int tam=collect_coordenadas.size(); 
        for (int i=0; i<tam;i++)
-       { obj.setX(collect_coordenadas.get(i).getX());
-         obj.setY(collect_coordenadas.get(i).getY());
-         obj.setPos(i);
+       { x=collect_coordenadas.get(i).getX();
+         y=collect_coordenadas.get(i).getY();
+         coord_grasp obj = new coord_grasp(x,y,i,0);
          arrg_coord_grasp.add(obj);
        }    
       return arrg_coord_grasp;  
@@ -126,10 +155,7 @@ public class tools
      return v_pos;
     }
 
-    public tools() {
-    }
-    
-    
+
     public static ArrayList<coordenadas> carga_coordenadas(String archinput  )  
 	  { 
               ArrayList<coordenadas> collect_coordenadas = new ArrayList<coordenadas>(); 
@@ -223,7 +249,7 @@ public class tools
    { 
        float dist=(float) 0.0; 
    
-       dist= (float) Math.sqrt(Math.pow(x1-x2, 2)+ Math.pow(y1-y2, 2)); 
+       dist= (float) Math.pow((x1-x2)*(x1-x2) + (y1-y2)* (y1-y2), 0.5); 
        
        return dist;  
    
@@ -231,7 +257,7 @@ public class tools
    
    //obtencion de un vector que devuelva las distancias desdd un punto inicial a cada una de las coordenadas 
    //del conjunto de puntos cargados
-  public static float[] arreglo_distancias(int x, int y, ArrayList<coordenadas>arr_coordenadas )
+  public static float[] arreglo_distancias(int x, int y, ArrayList<coord_grasp>arr_coordenadas )
    { int tam=0; 
        tam=arr_coordenadas.size();
         float[] v_distancias= new float[tam];
