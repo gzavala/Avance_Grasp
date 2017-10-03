@@ -63,7 +63,7 @@ public class Met_Grasp {
        int x_prepop=0; 
        int y_prepop=0;
        //variable para le número de repeticiones del algoritmo grasp
-       long num_repeticiones=3; //100000 
+       long num_repeticiones=100000; //100000 
        int tam_arreglo=0; 
        int v_buscpos=0; 
     for (int numfile=0;numfile<numarch_coord; numfile++)
@@ -74,7 +74,7 @@ public class Met_Grasp {
        float v_dist=(float) 0.0;
        collect_coordenadas= tools.carga_coordenadas(arch_coordenadas); 
 
-       int[]arr_ocurrencias= new int[tam_arreglo];       
+    
   //-------------*****FASES DEL ALGORITMO GRASP*****------------------------------------------  
      //bucle para el total de repeticiones del algoritmo grasp, por cada repetición se obtiene una distancia mínima, 
      //luego se compara y se obtiene la distancia mínima por archivo leido
@@ -90,6 +90,7 @@ public class Met_Grasp {
         // Consiste en hallar a la primera solucion (x_prepop,y_prepop)
         // En este caso corresponderá a la coordenada mas próxima del punto inicial dado x0=0; y0=0,
          float[] v_distancias= new float[tam_arreglo];
+         int[]arr_ocurrencias= new int[tam_arreglo];   
          v_distancias=tools.arreglo_distancias(x0, y0, copia_coord_posicion);
          v_posinicial=tools.posicion_minimo_elemento(v_distancias, tam_arreglo);
          x_prepop=copia_coordenadas.get(v_posinicial).getX();
@@ -111,7 +112,6 @@ public class Met_Grasp {
          copia_coord_posicion.remove(v_buscpos);
          //se tiene la variable dnde se acumulará la distancia para cada corrida
          //v_dist=v_distancias[v_posinicial];
-         
          
          //*2 Fase Constructiva
           int tam_recorrido=copia_coord_posicion.size();
@@ -146,15 +146,16 @@ public class Met_Grasp {
               if (contador_validos==pos_candidata)
               {  //Se ubico al objeto que pasa a la lista elite
                  //Es el nuevo inicio para la siguiente iteracion 
-                 x0= copia_coord_posicion.get(k).getX();
+                 x0=copia_coord_posicion.get(k).getX();
                  y0=copia_coord_posicion.get(k).getY();
-                 solucion_elite.add(copia_coord_posicion.get(k)); 
+                 solucion_elite.add(copia_coord_posicion.get(k));
+                 arr_ocurrencias[copia_coord_posicion.get(k).getPos()]=1;
                  copia_coord_posicion.remove(k);
+                 break;
                }  
              }   
             tam_recorrido=copia_coord_posicion.size();
-            
-            
+
            }  
          v_dist=tools.distanciaelite(xinicial,yinicial,solucion_elite);
           
