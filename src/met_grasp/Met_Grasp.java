@@ -50,9 +50,14 @@ public class Met_Grasp {
     int numarch_coord=1; //corresponde al numero de archivos de entrada a leer 
     String nombgen_arch="";
     ArrayList<coordenadas>collect_coordenadas=new ArrayList<coordenadas>();  
+    
     //Las coordenadas iniciales desde el cual parte el algoritmo
     int x0=0; 
     int y0=0; 
+    int v_posinicial=0;
+    //variables para la etapa de prepocesamiento
+    int x_prepop=0; 
+    int y_prepop=0;
     
     for (int numfile=0;numfile<numarch_coord; numfile++)
     {   
@@ -73,10 +78,19 @@ public class Met_Grasp {
         { System.out.println("Coordenada "+ (i+1)+" con valor : "+ mapa[collect_coordenadas.get(i).getX()][collect_coordenadas.get(i).getY()]);
         }  
     */
+  //-------------*****FASES DEL ALGORITMO GRASP*****------------------------------------------  
+    
     //*0 Para éste caso el índice de sensibilidad viene dado por la distancia euclidieana entre puntos
     
-    //*1 Fase de Preprocesamiento
-    
+    //*1 Fase de Preprocesamiento 
+    // Consiste en hallar a la primera solucion
+    // En este caso corresponderá a la coordenada mas próxima del punto inicial dado x0=0; y0=0,
+     float[] v_distancias= new float[collect_coordenadas.size()];
+     v_distancias=tools.arreglo_distancias(x0, y0, collect_coordenadas);
+     v_posinicial=tools.posicion_minimo_elemento(v_distancias, collect_coordenadas.size());
+     x_prepop=collect_coordenadas.get(v_posinicial).getX();
+     y_prepop=collect_coordenadas.get(v_posinicial).getY();
+     
     //*2 Fase Constructiva
     
     //*3 Fase de Búsqueda
@@ -88,7 +102,9 @@ public class Met_Grasp {
     
     
     
-/*     Pruebas de la busqueda recursiva, éste esquema será mejorado     
+/*  //Esta parte del programa para considerada para el refinamiento de las distancias, candidatas  a usar
+    //método de Floyd y Warshall
+    Pruebas de la busqueda recursiva, éste esquema será mejorado     
        int x1=5;
        int y1=5;
        int x2=3; 

@@ -115,7 +115,7 @@ public class tools
                return collect_coordenadas;  
 	  }
   //el carrito debe partir de una posicion con valor 1
-   public static int distanciaminima(int x1,int y1, int x2, int y2,int[][] mapa, int nfil,int ncol, ArrayList<coordenadas> desplazamiento  )
+  public static int distanciaminima(int x1,int y1, int x2, int y2,int[][] mapa, int nfil,int ncol, ArrayList<coordenadas> desplazamiento  )
    {  coordenadas obj_coor= new coordenadas();
       ArrayList<coordenadas> auxiliar= new ArrayList<coordenadas>();     
       int v_distancia=0;
@@ -177,9 +177,11 @@ public class tools
 
        return v_distancia;
    } 
-  
+
+//métodos a usarse con mayor precision   
+   
    //cálculo de distancia euclideana entre dos puntos
-   public static float dist_euclideana(int x1, int y1, int x2, int y2)
+  public static float dist_euclideana(int x1, int y1, int x2, int y2)
    { 
        float dist=(float) 0.0; 
    
@@ -191,7 +193,7 @@ public class tools
    
    //obtencion de un vector que devuelva las distancias desdd un punto inicial a cada una de las coordenadas 
    //del conjunto de puntos cargados
-   public static float[] arreglo_distancias(int x, int y, ArrayList<coordenadas>arr_coordenadas )
+  public static float[] arreglo_distancias(int x, int y, ArrayList<coordenadas>arr_coordenadas )
    { int tam=0; 
        tam=arr_coordenadas.size();
         float[] v_distancias= new float[tam];
@@ -202,4 +204,19 @@ public class tools
        return v_distancias; 
      }       
    
+  public static int posicion_minimo_elemento(float[] arr_distancias, int tam)
+   { int pos=0; 
+      float val_min=0;
+      val_min=arr_distancias[0];
+      
+      for (int i=0; i<tam; i++)
+      { if (arr_distancias[i]<val_min)
+        { val_min=arr_distancias[i];
+          pos=i; 
+         }      
+      }   
+      return pos; 
+      
+    }     
+  
 }
