@@ -77,7 +77,7 @@ public class tools
       return esta; 
     }
 
-    private static void copia(ArrayList<coordenadas> desplazamiento, ArrayList<coordenadas> auxiliar) {
+    private static void copia_desplazamiento(ArrayList<coordenadas> desplazamiento, ArrayList<coordenadas> auxiliar) {
        coordenadas obj= new coordenadas(); 
        int n=0; 
        for(int i=0; i<desplazamiento.size();i++)
@@ -158,7 +158,7 @@ public class tools
                 if( (mapa[x1+i][y1+j]!=1 ) && (!estacontenido(x1+i,y1+j,desplazamiento) ) )
                     //&&  ( ( (x1+i>=x1) && (x1+i<=x2)  ) ||( (y1+j>=y1) && (y1+j<=y2))  )  )
                 { //agregas el primer elemento que vendría a ser el minimo
-                    copia(desplazamiento,auxiliar);
+                    copia_desplazamiento(desplazamiento,auxiliar);
                     obj_coor.setX(x1+i);
                     obj_coor.setY(y1+j);
                     auxiliar.add(obj_coor);

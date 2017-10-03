@@ -24,12 +24,13 @@ public class Met_Grasp {
     
     //carga del mapa de carga
        String arch_mapa=".\\src\\archivos\\map0.txt" ;
+       String arch_salida=".\\src\\archivos\\output.txt";
        int nfil=30; 
        int ncol=60;
        int[][] mapa= new int[nfil][ncol];
        mapa= tools.carga_maps(arch_mapa,nfil,ncol); 
 
-    int numarch_coord=1; //corresponde al numero de archivos de entrada a leer 
+    int numarch_coord=7; //corresponde al numero de archivos de entrada a leer 
     String nombgen_arch="";
     ArrayList<coordenadas>collect_coordenadas=new ArrayList<coordenadas>(); 
     ArrayList<coordenadas>copia_coordenadas=new ArrayList<coordenadas>(); 
@@ -56,7 +57,7 @@ public class Met_Grasp {
   //-------------*****FASES DEL ALGORITMO GRASP*****------------------------------------------  
      //bucle para el total de repeticiones del algoritmo grasp
      for(int cont=0; cont<num_repeticiones; cont++)
-     {
+       {
         //copia de las coordenadas cargadas 
          copia_coordenadas=tools.copia_coordenadas(collect_coordenadas); 
 
@@ -76,8 +77,13 @@ public class Met_Grasp {
         //*3 Fase de Búsqueda
 
         //*4 Mejora Grasp-- > 2opt
-     } 
-
+        
+       } 
+       
+       v_distancia_minima=numfile;
+       //Se escribe la distancia mínima obtenida para el archivo de carga ".\\src\\archivos\\coordinates"+numfile+".txt"
+       //en el archivo de salida:  arch_salida
+      
     
     }
     
