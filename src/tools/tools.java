@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
+import model.coord_grasp;
 import model.coordenadas;
 
 /**
@@ -98,6 +99,31 @@ public class tools
          arr_coordenadas.add(obj);
        }   
        return arr_coordenadas;  
+    }
+
+    public static ArrayList<coord_grasp> copia_coord_posicion(ArrayList<coordenadas> collect_coordenadas) {
+      coord_grasp obj = new coord_grasp();
+      ArrayList<coord_grasp> arrg_coord_grasp= new ArrayList<coord_grasp>();
+      int tam=collect_coordenadas.size(); 
+       for (int i=0; i<tam;i++)
+       { obj.setX(collect_coordenadas.get(i).getX());
+         obj.setY(collect_coordenadas.get(i).getY());
+         obj.setPos(i);
+         arrg_coord_grasp.add(obj);
+       }    
+      return arrg_coord_grasp;  
+    }
+
+    public static int buscapocion_especial(ArrayList<coord_grasp> copia_coord_posicion, int v_posinicial) {
+    int tam=0; 
+    tam=copia_coord_posicion.size();
+    int v_pos=0; 
+     for(int i=0; i<tam;i++)
+      {  if ( copia_coord_posicion.get(i).getPos()==v_posinicial )
+          { v_pos=i; 
+          }
+      }   
+     return v_pos;
     }
 
     public tools() {
@@ -230,5 +256,22 @@ public class tools
       return pos; 
       
     }     
+
+  public static int posicion_maximo_elemento(float[] arr_distancias, int tam)
+   { int pos=0; 
+      float val_max=0;
+      val_max=arr_distancias[0];
+      
+      for (int i=0; i<tam; i++)
+      { if (arr_distancias[i]>val_max)
+        { val_max=arr_distancias[i];
+          pos=i; 
+         }      
+      }   
+      return pos; 
+      
+    }     
+
+
   
 }

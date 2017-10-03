@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import tools.tools;
 import model.coordenadas;
+import model.coord_grasp;
 
 /**
  *
@@ -42,6 +43,7 @@ public class Met_Grasp {
        String nombgen_arch="";
        ArrayList<coordenadas>collect_coordenadas=new ArrayList<coordenadas>(); 
        ArrayList<coordenadas>copia_coordenadas=new ArrayList<coordenadas>(); 
+       ArrayList<coord_grasp>copia_coord_posicion=new ArrayList<coord_grasp>();
        vwrite.write("id_archivo | Distancia Minima");
        vwrite.newLine();
        
@@ -56,24 +58,26 @@ public class Met_Grasp {
        int y_prepop=0;
        //variable para le número de repeticiones del algoritmo grasp
        long num_repeticiones=100000; 
-       float v_distancia_minima=(float) 0.0; 
-    
-    
+       int tam_arreglo=0; 
+       int v_buscpos=0; 
     for (int numfile=0;numfile<numarch_coord; numfile++)
     {   
     //*Carga del archivo de Coordenadas    
        String arch_coordenadas=".\\src\\archivos\\coordinates"+numfile+".txt" ;
-  
+       float v_distancia_minima=(float) 0.0; 
        collect_coordenadas= tools.carga_coordenadas(arch_coordenadas); 
+       tam_arreglo=collect_coordenadas.size();
+       int[]arr_ocurrencias= new int[tam_arreglo];       
   //-------------*****FASES DEL ALGORITMO GRASP*****------------------------------------------  
-     //bucle para el total de repeticiones del algoritmo grasp
+     //bucle para el total de repeticiones del algoritmo grasp, por cada repetición se obtiene una distancia mínima, 
+     //luego se compara y se obtiene la distancia mínima por archivo leido
      for(int cont=0; cont<num_repeticiones; cont++)
        {
        //copia de las coordenadas cargadas 
          copia_coordenadas=tools.copia_coordenadas(collect_coordenadas); 
-
-         //*0 Para éste caso el índice de sensibilidad viene dado por la distancia euclidieana entre puntos
-
+         copia_coord_posicion=tools.copia_coord_posicion(collect_coordenadas);
+        //*0 Para éste caso el índice de sensibilidad viene dado por la distancia euclidieana entre  2 puntos
+        
         //*1 Fase de Preprocesamiento 
         // Consiste en hallar a la primera solucion (x_prepop,y_prepop)
         // En este caso corresponderá a la coordenada mas próxima del punto inicial dado x0=0; y0=0,
@@ -82,12 +86,19 @@ public class Met_Grasp {
          v_posinicial=tools.posicion_minimo_elemento(v_distancias, copia_coordenadas.size());
          x_prepop=copia_coordenadas.get(v_posinicial).getX();
          y_prepop=copia_coordenadas.get(v_posinicial).getY();
-
-        //*2 Fase Constructiva
-
-        //*3 Fase de Búsqueda
-
-        //*4 Mejora Grasp-- > 2opt
+         //vector inicial de ocurrencias se inicializar en Ceros "0" 
+         for (int w=0; w<tam_arreglo;w++)
+          { arr_ocurrencias[w]=0; }  
+         //marca la posicion inicial como ya ocupada y la elimina en el arreglo de coord_posicion
+         arr_ocurrencias[v_posinicial]=1;
+         //busca la posicion en el arreglo que guarda las posiciones restantes, 
+         //aquella cuya posicion inicial era "v_posinicial" y lo elimina de la coleccion
+         v_buscpos=tools.buscapocion_especial(copia_coord_posicion,v_posinicial);          
+         copia_coord_posicion.remove(v_buscpos);
+        
+         //*2 Fase Constructiva
+        
+        //*3 Fase de Búsqueda ó  Mejora Grasp-- > a elegir 2opt ó best improvement ó first improment
         
        } 
 
