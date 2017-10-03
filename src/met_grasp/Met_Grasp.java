@@ -31,7 +31,7 @@ public class Met_Grasp {
        e.printStackTrace();
        }
     */         
-    //carga de mapa un solo mapa
+    //carga del mapa de carga
        String arch_mapa=".\\src\\archivos\\map0.txt" ;
        int nfil=30; 
        int ncol=60;
@@ -49,11 +49,13 @@ public class Met_Grasp {
     */          
     int numarch_coord=1; //corresponde al numero de archivos de entrada a leer 
     String nombgen_arch="";
+    ArrayList<coordenadas>collect_coordenadas=new ArrayList<coordenadas>();  
     
     for (int numfile=0;numfile<numarch_coord; numfile++)
-    {    
+    {   
+    //*Carga del archivo de Coordenadas    
        String arch_coordenadas=".\\src\\archivos\\coordinates"+numfile+".txt" ;
-       ArrayList<coordenadas>collect_coordenadas=new ArrayList<coordenadas>();     
+  
        collect_coordenadas= tools.carga_coordenadas(arch_coordenadas); 
 
     /* Prueba de que se cargaron correctamente las coordenadas
@@ -68,6 +70,16 @@ public class Met_Grasp {
         { System.out.println("Coordenada "+ (i+1)+" con valor : "+ mapa[collect_coordenadas.get(i).getX()][collect_coordenadas.get(i).getY()]);
         }  
     */
+    //*0 Para éste caso el índice de sensibilidad viene dado por la distancia euclidieana entre puntos
+    
+    //*1 Fase de Preprocesamiento
+    
+    //*2 Fase Constructiva
+    
+    //*3 Fase de Búsqueda
+    
+    //*4 Mejora Grasp-- > 2opt
+    
     }
     
     

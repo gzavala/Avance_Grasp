@@ -177,5 +177,16 @@ public class tools
 
        return v_distancia;
    } 
-     
+  
+   //cálculo de distancia euclideana entre dos puntos
+   public static float dist_euclideana(int x1, int y1, int x2, int y2)
+   { 
+       float dist=(float) 0.0; 
+   
+       dist= (float) Math.sqrt(Math.pow(x1-x2, 2)+ Math.pow(y1-y2, 2)); 
+       
+       return dist;  
+   
+     }      
+   
 }
