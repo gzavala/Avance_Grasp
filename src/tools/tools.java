@@ -189,4 +189,17 @@ public class tools
    
      }      
    
+   //obtencion de un vector que devuelva las distancias desdd un punto inicial a cada una de las coordenadas 
+   //del conjunto de puntos cargados
+   public static float[] arreglo_distancias(int x, int y, ArrayList<coordenadas>arr_coordenadas )
+   { int tam=0; 
+       tam=arr_coordenadas.size();
+        float[] v_distancias= new float[tam];
+        
+        for (int i=0; i<tam; i++)
+        { v_distancias[i]=dist_euclideana(x,y,arr_coordenadas.get(i).getX(),arr_coordenadas.get(i).getY()  ); 
+          }   
+       return v_distancias; 
+     }       
+   
 }

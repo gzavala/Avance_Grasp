@@ -50,6 +50,9 @@ public class Met_Grasp {
     int numarch_coord=1; //corresponde al numero de archivos de entrada a leer 
     String nombgen_arch="";
     ArrayList<coordenadas>collect_coordenadas=new ArrayList<coordenadas>();  
+    //Las coordenadas iniciales desde el cual parte el algoritmo
+    int x0=0; 
+    int y0=0; 
     
     for (int numfile=0;numfile<numarch_coord; numfile++)
     {   
