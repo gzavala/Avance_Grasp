@@ -143,7 +143,8 @@ public class tools
             { //Si la nueva posición está dentro del mapa
                if ( ( x1+i>=0) && (x1+i<=nfil-1) &&(y1+j>=0) && (y1+j<=ncol-1 )    )
               { //la siguiente posicion tiene que ser distinta de rack
-                if( (mapa[x1+i][y1+j]!=1 ) && (!estacontenido(x1+i,y1+j,desplazamiento) )  )
+                if( (mapa[x1+i][y1+j]!=1 ) && (!estacontenido(x1+i,y1+j,desplazamiento) ) )
+                    //&&  ( ( (x1+i>=x1) && (x1+i<=x2)  ) ||( (y1+j>=y1) && (y1+j<=y2))  )  )
                 { //agregas el primer elemento que vendría a ser el minimo
                     copia(desplazamiento,auxiliar);
                     obj_coor.setX(x1+i);
