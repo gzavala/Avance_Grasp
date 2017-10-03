@@ -52,7 +52,8 @@ public class Met_Grasp {
        vwrite.write("id_archivo | Distancia Minima");
        vwrite.newLine();
        
-       
+       int xinicial=0; 
+       int yinicial=0; 
     
        //Las coordenadas iniciales desde el cual parte el algoritmo
        int x0=0; 
@@ -109,7 +110,9 @@ public class Met_Grasp {
          
          copia_coord_posicion.remove(v_buscpos);
          //se tiene la variable dnde se acumulará la distancia para cada corrida
-         v_dist=v_distancias[v_posinicial];
+         //v_dist=v_distancias[v_posinicial];
+         
+         
          //*2 Fase Constructiva
           int tam_recorrido=copia_coord_posicion.size();
           while (tam_recorrido>0)
@@ -142,16 +145,22 @@ public class Met_Grasp {
                 } 
               if (contador_validos==pos_candidata)
               {  //Se ubico al objeto que pasa a la lista elite
+                 //Es el nuevo inicio para la siguiente iteracion 
+                 x0= copia_coord_posicion.get(k).getX();
+                 y0=copia_coord_posicion.get(k).getY();
                  solucion_elite.add(copia_coord_posicion.get(k)); 
                  copia_coord_posicion.remove(k);
                }  
              }   
             tam_recorrido=copia_coord_posicion.size();
+            
+            
            }  
-         
-         
-         
+         v_dist=tools.distanciaelite(xinicial,yinicial,solucion_elite);
+          
         //*3 Fase de Búsqueda ó  Mejora Grasp-- > a elegir 2opt con best improvement ó first improment
+        
+        
         
          if (cont==0)
          {  v_distancia_minima= v_dist;

@@ -41,6 +41,20 @@ public class tools
        return valor; 
     }
 
+    public static float distanciaelite(int xinicial, int yinicial, ArrayList<coord_grasp> solucion_elite) {
+       int tam=solucion_elite.size();
+       float dist=(float)0.0;
+       int a=xinicial; 
+       int b=yinicial; 
+       for (int i=0; i<tam;i++)
+        {  dist=dist+ dist_euclideana(a,b,solucion_elite.get(i).getX(),solucion_elite.get(i).getY() );
+           a=solucion_elite.get(i).getX();
+           b=solucion_elite.get(i).getY();
+         } 
+       return dist; 
+    
+    }
+
     public tools() {
     }
     
